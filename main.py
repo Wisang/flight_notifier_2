@@ -1,6 +1,6 @@
 import requests
+from flight_search import FlightSearch
 from flight_data import FlightData
-
 from data_manager import DataManager
 
 account_sid = "AC5d5d1d3bed511b084991b20279367956"
@@ -10,7 +10,9 @@ dm = DataManager()
 city_data = dm.get_data()
 
 fd = FlightData()
-flights = fd.get_flight_data()
+
+fs = FlightSearch(fd)
+flights = fs.get_flight_data()
 
 print(flights)
 
