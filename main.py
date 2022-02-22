@@ -1,38 +1,18 @@
 import requests
+from flight_data import FlightData
 
-from twilio.rest import Client
-
-sheety_endpoint = "https://api.sheety.co/b11e9ee43e97ab01dec13f717b53914f/flightDealsSample/prices"
-
-SHEETY_TOKEN = "Bearer d2lzYW5nOmJuVnNiRHB1ZFd4cw"
-FLIGHT_SEARCH_KEY = "lAwUkoUL72fXEVrFROaWQoHMgfH0xTH8"
-flight_search_endpoint = "https://tequila-api.kiwi.com/v2/search"
+from data_manager import DataManager
 
 account_sid = "AC5d5d1d3bed511b084991b20279367956"
 auth_token = "ed5c8d1fef5c6be30de6f9c36bb8a6ca"
 
-sheety_header = {
-    "Authorization": SHEETY_TOKEN
-}
+dm = DataManager()
+city_data = dm.get_data()
 
-flight_header = {
-    "apikey": FLIGHT_SEARCH_KEY,
-}
+fd = FlightData()
+flights = fd.get_flight_data()
 
-# flight_body = {
-#     "fly_from": "ICN",
-#     "fly_to": "MIA",
-#     "dateFrom": "22/02/2022",
-#     "dateTo": "23/02/2022",
-# }
-
-response = requests.get(url=sheety_endpoint, headers=sheety_header)
-price_data = response.json()["prices"]
-
-city_lowest_price = {item["iataCode"]: item["lowestPrice"]
-                     for item in price_data}
-
-print(city_lowest_price)
+print(flights)
 
 for key in city_lowest_price:
     flight_body = {
@@ -45,10 +25,5 @@ for key in city_lowest_price:
     data_list = response.json()["data"]
     for item in data_list:
         if city_lowest_price[key] > int(item["price"]):
-            client = Client(account_sid, auth_token)
-            message = client.messages.create(
-                body=f"to {item['cityTo']} is ${item['price']} on {item['route'][0]['last_seen']}",
-                from_='+18596952590',
-                to='+821023309854'
-            )
-            print(message.status)
+            print(f"to {item['cityTo']} is ${item['price']} on {item['route'][0]['last_seen']}")
+
