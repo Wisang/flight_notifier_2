@@ -10,9 +10,17 @@ class DataManager:
             "Authorization": self.SHEETY_TOKEN
         }
 
+        self.flight_body = {
+            "fly_from": "ICN",
+            "fly_to": "MIA",
+            "dateFrom": "22/02/2022",
+            "dateTo": "23/02/2022",
+        }
+
     def get_data(self):
         response = requests.get(url=self.sheety_endpoint, headers=self.sheety_header)
         price_data = response.json()["prices"]
         city_lowest_price = {item["iataCode"]: item["lowestPrice"] for item in price_data}
+        self.flight_body["fly_to"] = city_lowest_price
+        print(self.flight_body)
         return city_lowest_price
-
