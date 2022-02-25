@@ -4,16 +4,10 @@ from flight_data import FlightData
 from data_manager import DataManager
 
 dm = DataManager()
-city_data = dm.get_data()
 
-print(city_data)
-
-fd = FlightData()
-
-# fs = FlightSearch(fd)
-# flights = fs.get_flight_data()
-
+fd = FlightData(dm)
 print(fd.get_flight_data())
+
 
 # for key in city_lowest_price:
 #

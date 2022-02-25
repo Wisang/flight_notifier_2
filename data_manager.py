@@ -21,6 +21,4 @@ class DataManager:
         response = requests.get(url=self.sheety_endpoint, headers=self.sheety_header)
         price_data = response.json()["prices"]
         city_lowest_price = {item["iataCode"]: item["lowestPrice"] for item in price_data}
-        self.flight_body["fly_to"] = city_lowest_price
-        print(self.flight_body)
         return city_lowest_price
