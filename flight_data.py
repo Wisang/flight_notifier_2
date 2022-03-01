@@ -1,4 +1,5 @@
 import requests
+import datetime as dt
 
 
 class FlightData:
@@ -11,8 +12,8 @@ class FlightData:
         self.flight_body = {
             "fly_from": "LON",
             "fly_to": "MIA",
-            "dateFrom": "02/03/2022",
-            "dateTo": "02/09/2022",
+            "dateFrom": dt.datetime.now().strftime("%d/%m/%Y"), #"02/03/2022",
+            "dateTo": (dt.datetime.now()+dt.timedelta(days=60*3)).strftime("%d/%m/%Y"), #02/09/2022",
             "curr": "GBP",
             "max_stopovers": 0,
             "one_for_city": 1,
