@@ -11,8 +11,11 @@ class FlightData:
         self.flight_body = {
             "fly_from": "LON",
             "fly_to": "MIA",
-            "dateFrom": "25/02/2022",
-            "dateTo": "26/02/2022",
+            "dateFrom": "02/03/2022",
+            "dateTo": "02/09/2022",
+            "curr": "GBP",
+            "max_stopovers": 0,
+            "one_for_city": 1,
         }
         self.dm = data_manager
         self.total_data = []
@@ -24,6 +27,6 @@ class FlightData:
                 url=self.flight_search_endpoint,
                 headers=self.flight_header,
                 params=self.flight_body)
-            data = [(item["cityTo"], item["local_departure"], item["price"]) for item in response.json()["data"]]
+            data = [(item["cityTo"], item["local_departure"].split("T")[0], item["price"]) for item in response.json()["data"]]
             self.total_data.append(data)
         return self.total_data
