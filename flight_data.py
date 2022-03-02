@@ -28,6 +28,6 @@ class FlightData:
                 url=self.flight_search_endpoint,
                 headers=self.flight_header,
                 params=self.flight_body)
-            data = [(item["cityTo"], item["local_departure"].split("T")[0], item["price"]) for item in response.json()["data"]]
-            self.total_data.append(data)
+            for city_data in response.json()["data"]:
+                self.total_data.append((city_data["cityTo"], city_data["local_departure"].split("T")[0], city_data["price"]))
         return self.total_data
